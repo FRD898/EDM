@@ -1,10 +1,8 @@
-import { TextField, IconButton } from "@material-ui/core";
-import { makeStyles } from "@material-ui/core/styles";
+import { makeStyles } from "@mui/styles";
 import { useEffect, useState } from "react";
-import axios from "axios";
-import SearchIcon from '@material-ui/icons/Search';
-import Form from "./Form"
-
+import Bar from "./Bar"
+import Prediction from "./Prediction"
+import PredictionResult from "./PredictionResult";
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -13,60 +11,37 @@ const useStyles = makeStyles((theme) => ({
   },
   table:{
     margin: 'auto',
-    width: '50%',
+    width: '80%',
     padding: '10px',
   },
   row: {
       backgroundColor: "#EEEEEE",
   },
+  red: {
+    backgroundColor: "pink",
+    },
   header:{
       backgroundColor: "black",
       color: "white",
+  },
+  logo:{
+      height:"200px",
+      width: "150px" 
   }
 }));
 
 export default function Home() {
-  const [docList, setDocList] = useState([{
-    Abstract: " ",
-    Author: " ",
-    ID: " ",
-    "Publication Type": " ",
-    Source: " ",
-    Terms:
-      " ",
-    Title: " ",
-    UI: " ",
-    date: " "
-  }]);
-  const classes = useStyles();
   const [resultado, setResultado] = useState([])
-
-  const ListadeAlumnos = resultado.map((item, index) => {
-    return (
-        <tr className={classes.row} key={index}>
-            <td>Alumno {index}</td>
-            <td>{item}</td>
-        </tr>
-    );
-  });
+  const classes = useStyles();
   
   return (
     <div className={classes.root}>
+      <Bar></Bar>
       <div >
         <h1>Bienvenido</h1>
-        <Form setRespuesta = {setResultado}></Form>
+        <img className={classes.logo} src="https://upload.wikimedia.org/wikipedia/commons/f/f7/Uni-logo_transparente_granate.png"></img>
+        <Prediction setRespuesta = {setResultado}></Prediction>
       </div>
-      <div>
-          <h2>Resultados de la predicción</h2>
-          <table className={classes.table}>
-            <tr className={classes.header}>
-                <th>Alumno</th>
-                <th>Resultado</th>
-            </tr>
-            <tbody>
-                {ListadeAlumnos}
-            </tbody>
-          </table>
-      </div>
+      <PredictionResult resultado={resultado}></PredictionResult>
     </div>)
 }

@@ -1,8 +1,17 @@
 import React, {useState} from 'react';
 import axios from "axios";
 import Papa from "papaparse";
+import { Button, Paper } from "@mui/material";
+import { makeStyles } from "@mui/styles";
+
+const useStyles = makeStyles((theme) => ({
+    button:{
+        backgroundColor: "skyblue"
+    }
+  }));
 
 export default function Form(param) {
+    const classes = useStyles();
     const [name, setName] = useState('');
     const [selectedFile, setSelectedFile] = useState({});
     const handleSubmit = (e) =>{
@@ -11,7 +20,8 @@ export default function Form(param) {
             data: JSON.stringify(selectedFile)
         }}
         ).then((response)=>{
-            console.log(response.data.prediccion)
+            console.log("pred",response.data.prediccion)
+            console.log("real",response.data.real)
             param.setRespuesta(response.data.prediccion);
             if(response.status===200){
                 console.log("OK")
@@ -36,11 +46,14 @@ export default function Form(param) {
     }
 
     return (
-        <form onSubmit={handleSubmit}>
+        
+        <Paper>
+            <h2>Suba el archivo con los datos de los alumnos</h2>
             <input
-            type="file"
-            onChange={handleFileInput}
+                type="file"
+                onChange={handleFileInput}
             />
-      </form>
+            <Button className={classes.button} variant="contained" onClick={handleSubmit}>Submit</Button>
+        </Paper>
     )
   }
