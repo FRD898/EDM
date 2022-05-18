@@ -1,2 +1,3 @@
-./app/server/my_env
+./app/server/my_env/*
+./app/client/web-app/node_modules
 
